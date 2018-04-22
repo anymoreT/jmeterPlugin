@@ -14,17 +14,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
 
 import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.VerticalPanel;
@@ -164,43 +159,56 @@ public class DubboSampleGui extends AbstractSamplerGui {
 
         //表格panel
         JPanel tablePanel = new HorizontalPanel();
+
+
         //Args
         JLabel argsLable = new JLabel("        Args:", SwingConstants.RIGHT);
         model = new DefaultTableModel();
+        DefaultListSelectionModel listModel = new DefaultListSelectionModel();
+        TableColumnModel columnModel = new DefaultTableColumnModel();
 //        model.setDataVector(new String[][]{{"", ""}}, columnNames);
         model.setDataVector(null, columnNames);
-        final JTable table = new JTable(model);
-        table.setRowHeight(40);
-        //添加按钮
-        JButton addBtn = new JButton("增加");
-        addBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                // TODO Auto-generated method stub
-                rowVector.add("");
-                rowVector.add(paramTypeText);
-                rowVector.add("1");
-               // model.addRow(tmpRow);
-                model.addRow(rowVector);
+     //   final JTable table = new JTable(model);
+        TableColumn fistColumn = new TableColumn();
 
-            }
-        });
-        JButton delBtn = new JButton("删除");
-        delBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                // TODO Auto-generated method stub
-                int rowIndex = table.getSelectedRow();
-                if(rowIndex != -1)
-                    model.removeRow(rowIndex);
-            }
-        });
+        columnModel.addColumn(fistColumn);
+        final JTable table = new JTable(model,columnModel,listModel);
+        table.setRowHeight(40);
+        JTextArea jTextArea = new JTextArea();
+
+
+
+        //添加按钮
+//        JButton addBtn = new JButton("增加");
+//        addBtn.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent arg0) {
+//                // TODO Auto-generated method stub
+//                rowVector.add("");
+//                rowVector.add(paramTypeText);
+//                rowVector.add("1");
+//               // model.addRow(tmpRow);
+//                model.addRow(rowVector);
+//
+//            }
+//        });
+//        JButton delBtn = new JButton("删除");
+//        delBtn.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent arg0) {
+//                // TODO Auto-generated method stub
+//                int rowIndex = table.getSelectedRow();
+//                if(rowIndex != -1)
+//                    model.removeRow(rowIndex);
+//            }
+//        });
         //表格滚动条
         JScrollPane scrollpane = new JScrollPane(table);
         tablePanel.add(argsLable);
         tablePanel.add(scrollpane);
-        tablePanel.add(addBtn);
-        tablePanel.add(delBtn);
+        tablePanel.add(jTextArea);
+//        tablePanel.add(addBtn);
+//        tablePanel.add(delBtn);
         interfaceSettings.add(tablePanel);
 
         //所有设置panel
